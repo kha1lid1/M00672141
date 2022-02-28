@@ -5,8 +5,6 @@ import colorsys
 client = opc.Client('localhost:7890')
 leds = [(0,0,0)]*360
 
-
-
 HI = [29,30,33,34,36,37,38,39,40,41,89,90,93,94,96,97,98,
       99,100,101,149,150,151,152,153,154,158,159,209,210,
       211,212,213,214,218,219,269,270,273,274,276,277,278,
@@ -46,80 +44,80 @@ def say(colour, time, text):
         sleep(time)
 
 
+while True:
+    choice = input ("What animation would you like to see?\n1.HI\n2.Moving Numbers123\n3.READY,STEADY,GO\n4.Moving car\n5.Snake\n")
 
-choice = input ("What animation would you like to see?\n1.HI\n2.Moving Numbers123\n3.READY,STEADY,GO\n4.Moving car\n5.Snake\n")
+    if choice == '1':
+        print ('whats your name')              #Prints whats your name. Asks for a Nmae.
+        myname = input ()                     # input your name.
+        print ('HI,' + myname)                  #prints Hi + the inpued name.
+        say((0,128,0),0.03,HI)
+        say((255,255,255), 0.0003, HI)
+        say((255,165,0), 0.0003, HI)
 
-if choice == '1':
-    print ('whats your name')              #Prints whats your name. Asks for a Nmae.
-    myname = input ()                     # input your name.
-    print ('HI,' + myname)                  #prints Hi + the inpued name.
-    say((0,128,0),0.03,HI)
-    say((255,255,255), 0.0003, HI)
-    say((255,165,0), 0.0003, HI)
+        numLEDs = 360
 
-    numLEDs = 360
+        t = 0
 
-    t = 0
+        while True:
+            t += 1
+            brightness = int(min(1, 1.25 + math.sin(t)) * 255)
+            frame = [ (brightness, brightness, brightness) ] * numLEDs
+            client.put_pixels(frame)
+            time.sleep(0.05)
 
-    while True:
-        t += 1
-        brightness = int(min(1, 1.25 + math.sin(t)) * 255)
-        frame = [ (brightness, brightness, brightness) ] * numLEDs
-        client.put_pixels(frame)
-        time.sleep(0.05)
-
-elif choice == '2':
-    n = 12
-    while n < 60:
-        leds = [(0,0,0)]*360
-        for x in one_two_three:
-            leds[x] = (255,255,255)
-            client.put_pixels(leds)
-        for x in enumerate(one_two_three):
-            one_two_three[x[0]] = x[1]+1
-        time.sleep(0.3)
-        n+=1
-elif choice == '3':
-    while True:
-        for x in range(3):
-            say((255,0,0),0,ready)
-            time.sleep(0.5)
+    elif choice == '2':
+        n = 12
+        while n < 60:
             leds = [(0,0,0)]*360
-            client.put_pixels(leds)
-            time.sleep(0.2)
-        for x in range(3):
-            say((0,255,0),0,steady)
-            time.sleep(0.5)
+            for x in one_two_three:
+                leds[x] = (255,255,255)
+                client.put_pixels(leds)
+            for x in enumerate(one_two_three):
+                one_two_three[x[0]] = x[1]+1
+            time.sleep(0.3)
+            n+=1
+    elif choice == '3':
+        while True:
+            for x in range(3):
+                say((255,0,0),0,ready)
+                time.sleep(0.5)
+                leds = [(0,0,0)]*360
+                client.put_pixels(leds)
+                time.sleep(0.2)
+            for x in range(3):
+                say((0,255,0),0,steady)
+                time.sleep(0.5)
+                leds = [(0,0,0)]*360
+                client.put_pixels(leds)
+                time.sleep(0.2)
+            for x in range(3):
+                say((0,0,255),0,go)
+                time.sleep(0.5)
+                leds = [(0,0,0)]*360
+                client.put_pixels(leds)
+                time.sleep(0.2)
+    elif choice == '4':
+        n = 3
+        while n < 60:
             leds = [(0,0,0)]*360
-            client.put_pixels(leds)
-            time.sleep(0.2)
-        for x in range(3):
-            say((0,0,255),0,go)
-            time.sleep(0.5)
+            for x in car:
+                leds[x] = (255,255,255)
+                client.put_pixels(leds)
+            for x in enumerate(car):
+                car[x[0]] = x[1]+1
+            input('press enter to continue')
+            n+=1
+    elif choice == '5':
+        n = 2
+        while n < 360:
             leds = [(0,0,0)]*360
-            client.put_pixels(leds)
-            time.sleep(0.2)
-elif choice == '4':
-    n = 3
-    while n < 60:
-        leds = [(0,0,0)]*360
-        for x in car:
-            leds[x] = (255,255,255)
-            client.put_pixels(leds)
-        for x in enumerate(car):
-            car[x[0]] = x[1]+1
-        input('press enter to continue')
-        n+=1
-elif choice == '5':
-    n = 2
-    while n < 360:
-        leds = [(0,0,0)]*360
-        for x in snake:
-            leds[x] = (255,255,255)
-            client.put_pixels(leds)
-        for x in enumerate(snake):
-            snake[x[0]] = x[1]+1
-        time.sleep(0.1)
-        n+=1
+            for x in snake:
+                leds[x] = (255,255,255)
+                client.put_pixels(leds)
+            for x in enumerate(snake):
+                snake[x[0]] = x[1]+1
+            time.sleep(0.1)
+            n+=1
 else:
-    print("Option not recognised")
+        print("Option not recognised")
