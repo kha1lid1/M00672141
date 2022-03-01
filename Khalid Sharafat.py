@@ -37,7 +37,7 @@ car = [120,121,122,180,181,182]
 
 snake = [0,1,2]
 
-def say(colour, time, text):
+def say(colour, time, text): what the fuctontion does
     for i in text:
         leds [i] = colour                                            #tuns on the specifys the LEDs.
         client.put_pixels(leds)
@@ -53,19 +53,20 @@ while True:
         print ('HI,' + myname)                  #prints Hi + the inpued name.
         say((0,128,0),0.03,HI)
         say((255,255,255), 0.0003, HI)
-        say((255,165,0), 0.0003, HI)
+        say((255,165,0), 0.0003, HI)    # call say fun
 
         numLEDs = 360
-
         t = 0
+        n = 0
 
-        while True:
+        while n < 100:
             t += 1
             brightness = int(min(1, 1.25 + math.sin(t)) * 255)
             frame = [ (brightness, brightness, brightness) ] * numLEDs
             client.put_pixels(frame)
             time.sleep(0.05)
-
+            n += 1
+            
     elif choice == '2':
         n = 12
         while n < 60:
@@ -77,8 +78,10 @@ while True:
                 one_two_three[x[0]] = x[1]+1
             time.sleep(0.3)
             n+=1
+        leds = [(0,0,0)]*360
     elif choice == '3':
-        while True:
+        n =0
+        while n < 3:
             for x in range(3):
                 say((255,0,0),0,ready)
                 time.sleep(0.5)
@@ -97,6 +100,7 @@ while True:
                 leds = [(0,0,0)]*360
                 client.put_pixels(leds)
                 time.sleep(0.2)
+            n += 1
     elif choice == '4':
         n = 3
         while n < 60:
@@ -119,5 +123,5 @@ while True:
                 snake[x[0]] = x[1]+1
             time.sleep(0.1)
             n+=1
-else:
-        print("Option not recognised")
+    else:
+            print("Option not recognised")
