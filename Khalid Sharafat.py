@@ -33,11 +33,11 @@ go = [26, 27, 28, 29, 30, 86, 146, 149, 150, 206, 210,
        266, 267, 268, 269, 270, 32, 33, 34, 35, 36, 92,
        96, 152, 156, 212, 216, 272, 273, 274, 275, 276]
 
-car = [120,121,122,180,181,182]
+car = [63,64,65,124,125,126,184,185,186,242,244,62,120,121,122,123,183,180,181,182,]
 
 snake = [0,1,2]
 
-def say(colour, time, text): what the fuctontion does
+def say(colour, time, text): # what the fuctontion does
     for i in text:
         leds [i] = colour                                            #tuns on the specifys the LEDs.
         client.put_pixels(leds)
@@ -45,7 +45,7 @@ def say(colour, time, text): what the fuctontion does
 
 
 while True:
-    choice = input ("What animation would you like to see?\n1.HI\n2.Moving Numbers123\n3.READY,STEADY,GO\n4.Moving car\n5.Snake\n")
+    choice = input ("What animation would you like to see?\n1.HI\n2.Moving Numbers123\n3.READY,STEADY,GO\n4.Moving car\n5.Snake\n6.Random color\n") #string 
 
     if choice == '1':
         print ('whats your name')              #Prints whats your name. Asks for a Nmae.
@@ -81,7 +81,7 @@ while True:
         leds = [(0,0,0)]*360
     elif choice == '3':
         n =0
-        while n < 3:
+        while n < 1:
             for x in range(3):
                 say((255,0,0),0,ready)
                 time.sleep(0.5)
@@ -123,5 +123,23 @@ while True:
                 snake[x[0]] = x[1]+1
             time.sleep(0.1)
             n+=1
+    elif choice =='6':
+            s = 1.0 ##maximum colour
+            v = 1.0 ##maximum brightness
+
+            for hue in range(360):
+                rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v) #colorsys returns floats between 0 and 1
+                print(rgb_fractional)
+                r_float = rgb_fractional[0] #extract said floating point numbers
+                g_float = rgb_fractional[1]
+                b_float = rgb_fractional[2]
+
+                rgb = (r_float*255, g_float*255, b_float*255) #make new tuple with corrected values
+                print(rgb)
+                leds[hue] = rgb
+                client.put_pixels(leds) #send out
+
+                sleep(0.03) #20ms
+            
     else:
             print("Option not recognised")
